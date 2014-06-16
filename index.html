@@ -35,14 +35,16 @@
             {{#each model}}
             <tr style="alignment-adjust: central"><td td style="width: 70px;">
                     
-                {{#link-to 'post' this}}{{person}}{{/link-to}}
+                {{input type="text" value=person}}
             </td> <td td style="width: 70px;">
                     
-                {{#link-to 'post' this}}{{display}}{{/link-to}}
+               {{display}}
             </td><td td style="width: 100px;">
                     
-                {{#link-to 'post' this}}{{comment}}{{/link-to}}
-            </td><td>{{#link-to 'post' this class="edit-btn"}}Edit user {{/link-to}}</td></tr>
+              {{comment}}
+            </td><td>{{#link-to 'post' this class="edit-btn"}}
+                    <button>Edit</button>
+                        {{/link-to}}</td></tr>
            
     
             {{/each}}
@@ -65,11 +67,11 @@
        
     <tr><td width="70px">Date</td><td>{{input type="date" value=date}}</td></tr>
    <tr><td width="70px">Description</td><td>{{input type="text" value=description}}</td></tr>
-    <tr><td width="70px">Name</td><td>{{input type="text" value=name}}</td></tr>
+    <tr><td width="70px">Name</td><td>{{input type="text" value=name action="saveName"}}</td></tr>
    <tr><td width="70px">Amount</td><td>{{input type="text" value=amount}}</td></tr>
   
    
-    <button {{action 'SaveExpenses'}}>Save</button>
+    <button {{action 'save'}}>Save</button>
 </form>
    {{/each}}
         </div>
