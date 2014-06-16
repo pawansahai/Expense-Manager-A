@@ -33,10 +33,17 @@ var expenses =[{
 App.Router.map(function() {
   this.resource('about');
   this.resource('posts', function() {
-    this.resource('post', { path: ':post_id' });
+    this.resource('post', { path: ':post_id' }, function(){
+    this.route('edit');
+   
+    });
+    this.route('create');
   });
   this.resource('expenses', function() {
-    this.resource('expense', { path: ':expense_id' });
+    this.resource('expense', { path: ':expense_id' }, function(){
+        this.route('edit');
+    });
+    this.route('create');
   });
   
 });
@@ -63,17 +70,26 @@ App.ExpenseRoute = Ember.Route.extend({
   }
 });
 App.PostController = Ember.ObjectController.extend({
-  isEditing: false,
-
-  edit: function() {
-    this.set('isEditing', true);
-  },
-
-  doneEditing: function() {
-    this.set('isEditing', false);
-    this.get('store').commit();
-  }
+ actions: {
+     save : function(){
+         var post = this.get('model');
+post.save();
+this.transitionToRoute('post',post);
+     }
+ }
 });
+
+
+App.ExpenseController = Ember.ObjectController.extend({
+ actions: {
+     save : function(){
+         var expense = this.get('model');
+post.save();
+this.transitionToRoute('expense',expense);
+     }
+ }
+});
+
 
 App.UsersCreateRoute = Ember.Route.extend({
   model: function(){
@@ -105,8 +121,17 @@ App.UsersCreateController = Ember.ObjectController.extend({
     }
   }
 });
-
+App.ExpenseController= Ember.Controller.extend(
+{
+init: function(){
+    this.set('Person',localStorage.appName);
+},
+savePerson : function(value){
+    localStorage.appPerson=value;
+}
+})
 var showdown = new Showdown.converter();
+
 
 Ember.Handlebars.helper('format-markdown', function(input) {
   return new Handlebars.SafeString(showdown.makeHtml(input));
